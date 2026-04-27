@@ -34,7 +34,7 @@ WMO_CODES: dict[int, tuple[str, str]] = {
 
 
 async def fetch_weather(city: str) -> dict[str, object]:
-    """Fetch current weather for a city using Open-Meteo geocoding and forecast APIs."""
+    """Fetch current weather for a city using Open-Meteo."""
     async with httpx.AsyncClient(timeout=10) as client:
         geo_resp = await client.get(
             GEOCODING_URL,
@@ -42,12 +42,12 @@ async def fetch_weather(city: str) -> dict[str, object]:
         )
 
         if geo_resp.status_code != 200:
-            return {"error": "Geocoding service unavailable"}
+            raise ValueError("Geocoding service unavailable")
 
         geo_data = geo_resp.json()
         results = geo_data.get("results")
         if not results:
-            return {"error": f"City '{city}' not found"}
+            raise ValueError(f"City '{city}' not found")
 
         location = results[0]
         lat = location["latitude"]
@@ -75,7 +75,7 @@ async def fetch_weather(city: str) -> dict[str, object]:
         )
 
         if weather_resp.status_code != 200:
-            return {"error": "Weather service unavailable"}
+            raise ValueError("Weather service unavailable")
 
         w = weather_resp.json()["current"]
         wmo_code = w["weather_code"]

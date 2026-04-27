@@ -3,8 +3,8 @@
 import pkgutil
 from pathlib import Path
 
-from weather_app.db.models.user import User
-from weather_app.db.models.weather_log import WeatherDetails
+from weather_app.db.models.user_model import User
+from weather_app.db.models.weather_log_model import WeatherDetails
 
 
 def load_all_models() -> None:

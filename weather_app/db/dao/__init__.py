@@ -1,1 +1,1 @@
-"""DAO classes."""
+"""Database Access Object (DAO) layer."""

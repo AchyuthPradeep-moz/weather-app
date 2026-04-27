@@ -1,3 +1,5 @@
+"""Central API router — registers all feature routers."""
+
 from fastapi.routing import APIRouter
 
 from weather_app.web.api import echo, monitoring
@@ -8,5 +10,5 @@ api_router = APIRouter()
 
 api_router.include_router(monitoring.router, tags=["monitoring"])
 api_router.include_router(echo.router, prefix="/echo", tags=["echo"])
-api_router.include_router(auth_router, prefix="/auth")
-api_router.include_router(weather_router, prefix="/weather")
+api_router.include_router(auth_router, prefix="/auth", tags=["auth"])
+api_router.include_router(weather_router, prefix="/weather", tags=["weather"])

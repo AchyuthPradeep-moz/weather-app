@@ -1,10 +1,12 @@
+"""Pydantic schemas for weather endpoints."""
+
 from datetime import datetime
 
 from pydantic import BaseModel
 
 
 class WeatherResponse(BaseModel):
-    """The live data we show after a search."""
+    """Live weather data returned after a search."""
 
     city: str
     country: str
@@ -12,13 +14,14 @@ class WeatherResponse(BaseModel):
     feels_like_c: float
     humidity: int
     wind_speed_kmh: float
-    visibility_m: int  # Added this weather parameter we discussed!
+    visibility_m: int
     description: str
-    icon: str  # The emoji icon
+    icon: str
 
 
 class SavedWeatherResponse(WeatherResponse):
-    """Data for the 'History' page."""
+    """Saved weather record returned from history."""
 
-    id: int  # Changed to int because we switched Weather logs to Integers
+    id: int
     saved_at: datetime
+    model_config = {"from_attributes": True}  # required for ORM serialization
