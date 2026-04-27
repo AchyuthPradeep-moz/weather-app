@@ -1,16 +1,17 @@
+"""Application lifespan: startup and shutdown events."""
+
 from collections.abc import AsyncGenerator
 from contextlib import asynccontextmanager
 
 from fastapi import FastAPI
 from sqlalchemy.ext.asyncio import async_sessionmaker, create_async_engine
 
-from weather_app.services.redis.lifespan import init_redis, shutdown_redis
 from weather_app.settings import settings
 
 
 def _setup_db(app: FastAPI) -> None:  # pragma: no cover
     """
-    Creates connection to the database.
+    Create connection to the database.
 
     This function creates SQLAlchemy engine instance,
     session_factory for creating sessions
@@ -40,13 +41,10 @@ async def lifespan_setup(
     :param app: the fastAPI application.
     :return: function that actually performs actions.
     """
-
     app.middleware_stack = None
     _setup_db(app)
-    init_redis(app)
     app.middleware_stack = app.build_middleware_stack()
 
     yield
-    await app.state.db_engine.dispose()
 
-    await shutdown_redis(app)
+    await app.state.db_engine.dispose()

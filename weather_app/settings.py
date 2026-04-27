@@ -57,6 +57,11 @@ class Settings(BaseSettings):
     sentry_dsn: str | None = None
     sentry_sample_rate: float = 1.0
 
+    # JWT
+    secret_key: str = "changeme"  # noqa: S105
+    algorithm: str = "HS256"
+    access_token_expire_minutes: int = 60 * 24
+
     @property
     def db_url(self) -> URL:
         """

@@ -9,7 +9,7 @@ readme = "README.md"
 dependencies = [
   "fastapi >=0.122.0,<1",
   "uvicorn[standard] >=0.38.0,<1",
-  "pydantic >=2.12.5,<3",
+  "pydantic[email]>=2.12.5,<3",
   "pydantic-settings >=2.12.0,<3",
   "yarl >=1.22.0,<2",
   "ujson >=5.11.0,<6",
@@ -20,6 +20,10 @@ dependencies = [
   "httptools >=0.7.1,<1",
   "pymongo >=4.15.4,<5",
   "sentry-sdk >=2.46.0,<3",
+  "passlib[bcrypt] >=1.7.4,<2",
+  "python-jose[cryptography] >=3.3.0,<4",
+  "python-multipart >=0.0.9,<1",
+  "bcrypt ==4.0.1",
 ]
 
 [dependency-groups]
@@ -124,11 +128,11 @@ lint.ignore = [
     "PLR0913", # Too many arguments for function call
     "D106",    # Missing docstring in public nested class
 ]
+lint.mccabe = { max-complexity = 10 }
 exclude = [
     "weather_app/db/migrations",
     ".venv/"
 ]
-lint.mccabe = { max-complexity = 10 }
 line-length = 88
 
 [tool.ruff.lint.per-file-ignores]

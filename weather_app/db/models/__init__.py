@@ -3,6 +3,9 @@
 import pkgutil
 from pathlib import Path
 
+from weather_app.db.models.user import User
+from weather_app.db.models.weather_log import WeatherDetails
+
 
 def load_all_models() -> None:
     """Load all models from this folder."""
@@ -13,3 +16,6 @@ def load_all_models() -> None:
     )
     for module in modules:
         __import__(module.name)
+
+
+__all__ = ["User", "WeatherDetails", "load_all_models"]
