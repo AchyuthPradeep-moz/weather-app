@@ -3,6 +3,7 @@
 from pathlib import Path
 
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse, RedirectResponse
 from fastapi.staticfiles import StaticFiles
 
@@ -20,6 +21,19 @@ def get_app() -> FastAPI:
         docs_url="/api/docs",
         redoc_url="/api/redoc",
         openapi_url="/api/openapi.json",
+    )
+
+    # CORS — allow requests from Vercel frontend
+    app.add_middleware(
+        CORSMiddleware,
+        allow_origins=[
+            "https://weather-frontend-xi-ochre.vercel.app",
+            "http://localhost:8000",
+            "http://localhost:3000",
+        ],
+        allow_credentials=True,
+        allow_methods=["*"],
+        allow_headers=["*"],
     )
 
     app.include_router(router=api_router, prefix="/api")
